@@ -21,7 +21,8 @@ export default function App() {
       ...itemsActuales, 
       {
         id:(idItem).toString(),
-        value:textItem
+        value:textItem,
+        estatus:'0'
       }
     ])
 
@@ -33,13 +34,21 @@ export default function App() {
     
   }
 
+  const updateItem = (id) => {
+    const itemIndex = itemList.findIndex((item => item.id !== id))
+    const newItems = itemList
+    newItems[itemIndex].estatus = '1'
+    setItemList(newItems)
+
+  }
+
   const deleteItem = (id) => {
     const newItems = itemList.filter((item) => item.id !== id)
     setItemList(newItems)
   }
 
   const renderItem = ({item}) => (
-    <Item values={item} action={deleteItem} />
+    <Item values={item} del={deleteItem} upd={updateItem}/>
   )
 
   return (
