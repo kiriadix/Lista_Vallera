@@ -1,19 +1,29 @@
 import { Button, StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
 
-import React from 'react'
+const Item = ({values, deleteItem, updateItem}) => {
+  
+  const [data, setData] = useState({c:'#F8F0B9',w:150})
 
-const Item = ({values, del, upd}) => {
-  const colors = {'0':'#F8F0B9', '1':'#D4F4BC'}
+  const update = () => {
+    setData({c:'#D4F4BC',w:220})
+    updateItem(values.id)
+  }
 
   return (
-    <View style={{...styles.container, backgroundColor:colors[values.estatus]}}>
-      <Text style={styles.text}>- {values.value}</Text>
+    <View style={{...styles.container, backgroundColor:data.c}}>
+      <Text style={{...styles.text, width:data.w}}>- {values.value}</Text>
+      
+      {values.estatus === 0 ? 
+        (<View style={styles.btn}>
+          <Button title='complete' color='#13C23B' onPress={update}/>       
+        </View> ) 
+      : 
+        (<View></View>)}
+        
       <View style={styles.btn}>
-        <Button title='complete' color='#13C23B'/>
-      </View>
-      <View style={styles.btn}>
-        <Button title='Delete' color='red' onPress={() => action(values.id)}/>
-      </View>      
+        <Button title='Delete' color='red' onPress={() => deleteItem(values.id)}/> 
+      </View>         
     </View>
   )
 }
@@ -25,9 +35,7 @@ const styles = StyleSheet.create({
     flexDirection:'row', 
     justifyContent:'center',
     alignItems:'center',
-    borderColor: 'black',
     borderRadius:10,
-    borderWidth: 1,
     width:320,
     height:50,
     margin: 2,
