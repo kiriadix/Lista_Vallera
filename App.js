@@ -1,4 +1,4 @@
-import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, FlatList, Modal, Pressable, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 
 import Footer from './components/Footer';
 import Item from './components/Item';
@@ -10,6 +10,8 @@ export default function App() {
   const [textItem, setTextItem] = useState('')
   const [itemList, setItemList] = useState([])
   const [idItem, setIdItem] = useState(1)
+  const [modalVisible, setModalVisible] = useState(false)
+  const [itemSelected, setItemSelected] = useState({})
 
   const onHandleChangeItem = (t) => {
     setTextItem(t)
@@ -50,6 +52,11 @@ export default function App() {
   const renderItem = ({item}) => (
     <Item values={item} deleteItem={deleteItem} updateItem={updateItem}/>
   )
+
+  const selectedItem = (id) => {
+    setItemSelected(itemList.filter(item => item.id ===id))
+    setModalVisible(true)
+  }
 
   return (
     <View style={styles.container}>
